@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { UserProvider } from "./context/UserContext";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,10 +29,12 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserProvider>
-          <NavBar />
-          {children}
-          <Footer />
-          <Toaster />
+          <Suspense>
+            <NavBar />
+            {children}
+            <Footer />
+            <Toaster />
+          </Suspense>
         </UserProvider>
       </body>
     </html>

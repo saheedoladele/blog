@@ -33,6 +33,10 @@ export const getSinglePost = async (id) => {
     return axios.get(`${baseUrl}/blog/${id}`);
 };
 
+export const getPostBuName = async (name) => {
+    return axios.get(`${baseUrl}/blog/post?name=${name}`);
+};
+
 export const deletePost = async (id) => {
     return axios.delete(`${baseUrl}/blog/${id}`);
 };
