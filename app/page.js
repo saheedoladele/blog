@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getAllPost, getPostBuName } from "./api/user.service";
 import {toast} from "react-hot-toast";
 import SearchBar from "./components/SearchBar";
+import Preloader from "./components/Preloader";
 
 export default function Home() {
   const [isLoading, setIsloading] = useState(false)
@@ -94,12 +95,19 @@ export default function Home() {
   },[name])
   return (
     <div className="container py-4 flex flex-col items-center mt-6">
-     <h2 className="py-8"> <span className="text-secondary">Trending</span> Post</h2>
+    {
+      isLoading ? 
+        <Preloader isLoading={isLoading} /> :
+      <>
+      <h2 className="py-8"> <span className="text-secondary">Trending</span> Post</h2>
      
-    <TrendingPost blog={posts[0]} />
-
-    <SearchBar handleChange={handleNamechange} />
-    <PostList blogs={posts} />
+     <TrendingPost blog={posts[0]} />
+ 
+     <SearchBar handleChange={handleNamechange} />
+     <PostList blogs={posts} />
+      </>
+    }
+     
     </div>
   );
 }

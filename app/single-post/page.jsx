@@ -15,11 +15,12 @@ import ProfilePlaceholder from "../components/ProfilePlaceholder";
 import CommnetSection from "../components/CommnetSection";
 import AlertInfo from "../components/AlertInfo";
 import { FaComment, FaRegComment } from "react-icons/fa6";
+import Preloader from "../components/Preloader";
 
 
 export default function Home() {
   const [post, setPost] = useState(null)
-  const [losding,setLoding] = useState(false)
+  const [loading,setLoding] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [open, setOpen] = useState(false)
   const [comment, setComment] = useState('')
@@ -120,7 +121,11 @@ export default function Home() {
     <>
     <div className="container py-4 flex flex-col items-center mt-6">
 
-          <div className="flex items-center gap-4">
+{
+  loading ?
+  <Preloader isLoading={loading} /> :
+  <>
+  <div className="flex items-center gap-4">
           <div className="flex flex-col items-center gap-2 mt-3">
                 <Image src={"/images/avater.jpeg"} 
                        width={50} 
@@ -152,7 +157,7 @@ export default function Home() {
             
           </div>
 
-     <h2 className="py-8"> <span className="text-secondary">{post?.title}</span> </h2>
+          <h2 className="py-8"> <span className="text-secondary">{post?.title}</span> </h2>
      <p className="text-gray-500">{post?.summary}</p>
      <div className="flex items-center gap-2 mb-5 mt-5"><span className="text-secondary">theInsight.</span> <FiCalendar  className="text-secondary"/> {dateFormat(post?.createdAt, "dd, mmmm, yyyy") } </div>
 
@@ -175,6 +180,7 @@ export default function Home() {
 <div className="mt-4 flex items-center gap-1">
   <FaComment size={26} className="text-secondary" /> {post?.comments?.length || 0}
 </div>
+
 {
   user === null ?
   <div className="flex items-start">
@@ -199,17 +205,17 @@ export default function Home() {
       </div>
       </>
 }
-         
-         
 
         {
           post?.comments?.map((comment)=>(
             <CommnetSection author={comment?.user?.fullName} comment={comment?.content} />
           ))
         }
-    
+  </>
+}
+          
 
-    </div>
+</div>
 <DeleteDialogue title="Delete Post" 
                 message="You have choosen to delete this post, do you still what to delete?"
                 open={open}
